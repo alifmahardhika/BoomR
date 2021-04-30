@@ -38,8 +38,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         print("came here")
-        var bodyA = contact.bodyA
-        var bodyB = contact.bodyB
+        let bodyA = contact.bodyA
+        let bodyB = contact.bodyB
         
         print(bodyA.categoryBitMask)
         print(bodyB.categoryBitMask)
