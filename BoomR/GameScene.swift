@@ -12,13 +12,17 @@ import CoreMotion
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var manager = CMMotionManager()
     var player = SKSpriteNode()
-    var endNode = SKSpriteNode()
+    var monster = SKSpriteNode()
+    var wall = SKSpriteNode()
     
     override func didMove(to view: SKView) {
-//        backgroundColor = SKColor.yellow
         self.physicsWorld.contactDelegate = self
         
         player = self.childNode(withName: "player") as! SKSpriteNode
+        monster = self.childNode(withName: "monster") as! SKSpriteNode
+        wall = self.childNode(withName: "wall") as! SKSpriteNode
+        
+        
         player.position = CGPoint(x: frame.midX, y: frame.midY)
         player.physicsBody = SKPhysicsBody(circleOfRadius: player.frame.height / 2.0)
         manager.startAccelerometerUpdates()
@@ -31,6 +35,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
     }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        print("came here")
+        var bodyA = contact.bodyA
+        var bodyB = contact.bodyB
+        
+        print(bodyA.categoryBitMask)
+        print(bodyB.categoryBitMask)
+
+//        1 = wall
+//        2 = monster
+//        42949.. = player
+        if bodyA.categoryBitMask == 4294967295 && bodyB.categoryBitMask == 2 || bodyA.categoryBitMask == 2 && bodyB.categoryBitMask == 4294967295 {
+            print("HIT MONSTER")
+        }
+        else if bodyA.categoryBitMask == 4294967295 && bodyB.categoryBitMask == 1 || bodyA.categoryBitMask == 1 && bodyB.categoryBitMask == 4294967295 {
+            print("HIT WALL")
+        }
+
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
