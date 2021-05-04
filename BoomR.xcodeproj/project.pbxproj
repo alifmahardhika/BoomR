@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B11B7C726418CE00089A411 /* Fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B11B7C626418CE00089A411 /* Fire.sks */; };
+		0B11B7CA26418D0D0089A411 /* Spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B11B7C926418D0D0089A411 /* Spark.sks */; };
+		0B11B7CD26418E970089A411 /* Smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B11B7CC26418E970089A411 /* Smoke.sks */; };
+		0B11B7D0264194160089A411 /* LevelStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B11B7CF264194160089A411 /* LevelStruct.swift */; };
 		0B2FA78226414F0800C93236 /* lv1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B2FA78126414F0800C93236 /* lv1.sks */; };
 		0B2FA7852641522900C93236 /* lv1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FA7842641522900C93236 /* lv1.swift */; };
 		0B427BE9263BF5510040A9E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B427BE8263BF5510040A9E4 /* AppDelegate.swift */; };
@@ -19,6 +23,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B11B7C626418CE00089A411 /* Fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fire.sks; sourceTree = "<group>"; };
+		0B11B7C926418D0D0089A411 /* Spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Spark.sks; sourceTree = "<group>"; };
+		0B11B7CC26418E970089A411 /* Smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Smoke.sks; sourceTree = "<group>"; };
+		0B11B7CF264194160089A411 /* LevelStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelStruct.swift; sourceTree = "<group>"; };
 		0B2FA78126414F0800C93236 /* lv1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = lv1.sks; sourceTree = "<group>"; };
 		0B2FA7842641522900C93236 /* lv1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lv1.swift; sourceTree = "<group>"; };
 		0B427BE5263BF5510040A9E4 /* BoomR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoomR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,11 +75,15 @@
 				0B2FA78126414F0800C93236 /* lv1.sks */,
 				0B427BEC263BF5510040A9E4 /* Actions.sks */,
 				0B427BEE263BF5510040A9E4 /* GameScene.swift */,
+				0B11B7CC26418E970089A411 /* Smoke.sks */,
+				0B11B7C626418CE00089A411 /* Fire.sks */,
 				0B2FA7842641522900C93236 /* lv1.swift */,
 				0B427BF0263BF5510040A9E4 /* GameViewController.swift */,
 				0B427BF2263BF5510040A9E4 /* Main.storyboard */,
 				0B427BF5263BF5510040A9E4 /* Assets.xcassets */,
 				0B427BF7263BF5520040A9E4 /* Info.plist */,
+				0B11B7C926418D0D0089A411 /* Spark.sks */,
+				0B11B7CF264194160089A411 /* LevelStruct.swift */,
 			);
 			path = BoomR;
 			sourceTree = "<group>";
@@ -136,8 +148,11 @@
 				0B427BF4263BF5510040A9E4 /* Main.storyboard in Resources */,
 				0B2FA78226414F0800C93236 /* lv1.sks in Resources */,
 				0B427BEB263BF5510040A9E4 /* GameScene.sks in Resources */,
+				0B11B7CA26418D0D0089A411 /* Spark.sks in Resources */,
+				0B11B7C726418CE00089A411 /* Fire.sks in Resources */,
 				0B427BF6263BF5510040A9E4 /* Assets.xcassets in Resources */,
 				0B427BED263BF5510040A9E4 /* Actions.sks in Resources */,
+				0B11B7CD26418E970089A411 /* Smoke.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +167,7 @@
 				0B427BF1263BF5510040A9E4 /* GameViewController.swift in Sources */,
 				0B427BE9263BF5510040A9E4 /* AppDelegate.swift in Sources */,
 				0B2FA7852641522900C93236 /* lv1.swift in Sources */,
+				0B11B7D0264194160089A411 /* LevelStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
