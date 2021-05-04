@@ -15,6 +15,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var monster = SKSpriteNode()
     var wall = SKSpriteNode()
     var levelDetail = Level(life: 3, monsterCount: 2)
+    var lifeArr : [SKSpriteNode] = []
+    var monsterArr : [SKSpriteNode] = []
+    
     override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
         
@@ -36,33 +39,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             lifeIndex.run(SKAction.sequence([lifeIndexMove, lifeIndexRotation]))
 
             addChild(lifeIndex)
+            lifeArr.append(lifeIndex)
 
             positionAdd = positionAdd + 30.0
 
         }
         
-    //        monster indicator
-            var monsterIndexCount = 0
-            var monPositionAdd:CGFloat = 0
+//        monster indicator
+        var monsterIndexCount = 0
+        var monPositionAdd:CGFloat = 0
 
-            for monsterIndexCount in 0..<levelDetail.monsterCount {
+        for monsterIndexCount in 0..<levelDetail.monsterCount {
 
-                let monIndex = SKSpriteNode(imageNamed: "alien")
-                monIndex.size = CGSize(width: 25, height: 25)
+            let monIndex = SKSpriteNode(imageNamed: "alien")
+            monIndex.size = CGSize(width: 25, height: 25)
 
-                monIndex.position = CGPoint(x: self.frame.size.width * 5.5, y: 735)
-                
-                let monsterIndex = SKAction.move(to: CGPoint(x: 460 - positionAdd, y: 735), duration: TimeInterval(0.7))
+            monIndex.position = CGPoint(x: self.frame.size.width * 5.5, y: 735)
+            
+            let monsterIndex = SKAction.move(to: CGPoint(x: 460 - positionAdd, y: 735), duration: TimeInterval(0.7))
 
-                let monIndexRot = SKAction.rotate(byAngle: CGFloat(-2 * M_PI), duration: 0.3)
+            let monIndexRot = SKAction.rotate(byAngle: CGFloat(-2 * M_PI), duration: 0.3)
 
-                monIndex.run(SKAction.sequence([monsterIndex, monIndexRot]))
+            monIndex.run(SKAction.sequence([monsterIndex, monIndexRot]))
 
-                addChild(monIndex)
+            addChild(monIndex)
+            monsterArr.append(monIndex)
+            positionAdd = positionAdd + 30.0
 
-                positionAdd = positionAdd + 30.0
-
-            }
+        }
         
         
         
@@ -116,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         next?.touchesBegan(touches, with: event)
        
         scene?.view?.isPaused = !(scene?.view!.isPaused)!
-        }
+    }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
@@ -163,12 +167,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (crashed.name == "monster"){
             print("getin")
             levelDetail.monsterCount -= 1
+            let monNode = self.monsterArr.popLast()
+            monNode!.removeFromParent()
             if levelDetail.monsterCount == 0 {
                 print("menank")
 //                todo win seq
             }
         }
         levelDetail.life -= 1
+        let lifeNode = self.lifeArr.popLast()
+        lifeNode!.removeFromParent()
         if (levelDetail.life == 0){
             print("KALAH")
 //            todo failed seq
