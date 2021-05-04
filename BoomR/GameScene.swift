@@ -30,7 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         manager.startAccelerometerUpdates(to: OperationQueue.main){
             (data, error) in
             
-            self.physicsWorld.gravity = CGVector(dx: CGFloat((data?.acceleration.x)!) * 10, dy: CGFloat((data?.acceleration.y)!) * 10)
+            self.physicsWorld.gravity = CGVector(dx: CGFloat((data?.acceleration.x)!) * 30, dy: CGFloat((data?.acceleration.y)!) * 30)
             
         }
         
