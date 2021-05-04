@@ -1,5 +1,5 @@
 //
-//  GameScene.swift
+//  lv1.swift
 //  BoomR
 //
 //  Created by Alif Mahardhika on 30/04/21.
@@ -9,7 +9,7 @@ import SpriteKit
 import GameplayKit
 import CoreMotion
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class lv1: SKScene, SKPhysicsContactDelegate {
     var manager = CMMotionManager()
     var player = SKSpriteNode()
     var monster = SKSpriteNode()
@@ -30,7 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         manager.startAccelerometerUpdates(to: OperationQueue.main){
             (data, error) in
             
-            self.physicsWorld.gravity = CGVector(dx: CGFloat((data?.acceleration.x)!) * 20, dy: CGFloat((data?.acceleration.y)!) * 20)
+            self.physicsWorld.gravity = CGVector(dx: CGFloat((data?.acceleration.x)!) * 30, dy: CGFloat((data?.acceleration.y)!) * 30)
             
         }
         

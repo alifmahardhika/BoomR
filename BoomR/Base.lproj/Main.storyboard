@@ -86,8 +86,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <skView contentMode="scaleAspectFill" fixedFrame="YES" sceneName="GameScene.sks" translatesAutoresizingMaskIntoConstraints="NO" id="iIO-06-e0n">
-                                <rect key="frame" x="16" y="168" width="333" height="523"/>
+                            <skView contentMode="scaleAspectFit" fixedFrame="YES" sceneName="GameScene.sks" translatesAutoresizingMaskIntoConstraints="NO" id="iIO-06-e0n">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </skView>
                         </subviews>
