@@ -83,10 +83,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player = self.childNode(withName: "player") as! SKSpriteNode
         monster = self.childNode(withName: "monster") as! SKSpriteNode
         wall = self.childNode(withName: "wall") as! SKSpriteNode
-//        pauseBlock = self.childNode(withName: "pauseBlock") as! SKSpriteNode
-//        pauseBlock.position = CGPoint(x: frame.midX, y: frame.midY)
-//        pauseBlock.isHidden = true
-//        pauseBlock.removeFromParent()
         
         
         player.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -201,6 +197,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return pauseBlock
     }
     
+    func createInnerMenuDisplay(inner: SKShapeNode){
+        var header: SKLabelNode!
+        header = SKLabelNode(fontNamed: "Arial-BoldMT")
+        header.text = "TIMEOUT!"
+        header.name = "innerMenu"
+        header.fontSize = 26
+        header.fontColor = UIColor .black
+        header.horizontalAlignmentMode = .right
+        header.position = CGPoint(x: inner.frame.midX+60, y: inner.frame.midY+80)
+        
+        
+        var midEmoji: SKLabelNode!
+        midEmoji = SKLabelNode(fontNamed: "Arial-BoldMT")
+        midEmoji.text = "⏳⏳⏳"
+        midEmoji.name = "innerMenu"
+        midEmoji.fontSize = 26
+        midEmoji.fontColor = UIColor .black
+        midEmoji.horizontalAlignmentMode = .right
+        midEmoji.position = CGPoint(x: inner.frame.midX+40, y: inner.frame.midY-10)
+        
+        var menuMessage: SKLabelNode!
+        menuMessage = SKLabelNode(fontNamed: "Arial-MT")
+        menuMessage.text = "The game is paused"
+        menuMessage.name = "innerMenu"
+        menuMessage.fontSize = 20
+        menuMessage.fontColor = UIColor .black
+        menuMessage.horizontalAlignmentMode = .right
+        menuMessage.position = CGPoint(x: inner.frame.midX+90, y: inner.frame.midY-100)
+        
+        inner.addChild(header)
+        inner.addChild(midEmoji)
+        inner.addChild(menuMessage)
+
+    }
+    
     func createMenuBlock() -> SKShapeNode {
         let inner = SKShapeNode(rect: CGRect(x: frame.midX - 130, y: frame.midY - 80, width: 260, height: 300), cornerRadius: 10)
         inner.fillColor = hexStringToUIColor(hex:"#FFDC00")
@@ -209,7 +240,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        inner.position = CGPoint(self.size.width * 0.5, self.size.height * 0.5)
 //        inner.position = CGPoint(x: frame.midX - 130, y: frame.midY - 80)
         inner.name = "innerMenu"
-        
+        createInnerMenuDisplay(inner: inner)
 //        button
         let tryAgain = SKShapeNode(rect: CGRect(x: frame.midX - 130 , y: frame.midY - 140, width: 260, height: 50), cornerRadius: 10)
         tryAgain.fillColor = hexStringToUIColor(hex:"#F42C48")
