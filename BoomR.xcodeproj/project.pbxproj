@@ -17,7 +17,6 @@
 		0B2C56F926434D8C00C2DF8A /* Launchscreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B2C56F826434D8C00C2DF8A /* Launchscreen.storyboard */; };
 		0B2FA78226414F0800C93236 /* lv1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B2FA78126414F0800C93236 /* lv1.sks */; };
 		0B427BE9263BF5510040A9E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B427BE8263BF5510040A9E4 /* AppDelegate.swift */; };
-		0B427BEB263BF5510040A9E4 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B427BEA263BF5510040A9E4 /* GameScene.sks */; };
 		0B427BED263BF5510040A9E4 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B427BEC263BF5510040A9E4 /* Actions.sks */; };
 		0B427BEF263BF5510040A9E4 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B427BEE263BF5510040A9E4 /* GameScene.swift */; };
 		0B427BF1263BF5510040A9E4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B427BF0263BF5510040A9E4 /* GameViewController.swift */; };
@@ -38,7 +37,6 @@
 		0B2FA78126414F0800C93236 /* lv1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = lv1.sks; sourceTree = "<group>"; };
 		0B427BE5263BF5510040A9E4 /* BoomR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoomR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B427BE8263BF5510040A9E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0B427BEA263BF5510040A9E4 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		0B427BEC263BF5510040A9E4 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		0B427BEE263BF5510040A9E4 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0B427BF0263BF5510040A9E4 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +57,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B2C56FF2643520900C2DF8A /* Level Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				0B2FA78126414F0800C93236 /* lv1.sks */,
+				0B2C56EC26430DCA00C2DF8A /* lv2.sks */,
+				0B2C56F226431F4600C2DF8A /* lv3.sks */,
+			);
+			path = "Level Scenes";
+			sourceTree = "<group>";
+		};
+		0B2C57012643524400C2DF8A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0B11B7CC26418E970089A411 /* Smoke.sks */,
+				0B11B7C926418D0D0089A411 /* Spark.sks */,
+				0B11B7C626418CE00089A411 /* Fire.sks */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0B2C57032643527000C2DF8A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				0B427BF2263BF5510040A9E4 /* Main.storyboard */,
+				0B2C56F826434D8C00C2DF8A /* Launchscreen.storyboard */,
+				0B2C56EF26431A0400C2DF8A /* SelectLevelViewController.swift */,
+				0B427BF0263BF5510040A9E4 /* GameViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		0B2C5704264352AA00C2DF8A /* Game Specifics */ = {
+			isa = PBXGroup;
+			children = (
+				0B427BEE263BF5510040A9E4 /* GameScene.swift */,
+				0B11B7CF264194160089A411 /* LevelStruct.swift */,
+				0BD9D70E2642946D00F7C10D /* SceneViewController.swift */,
+			);
+			path = "Game Specifics";
+			sourceTree = "<group>";
+		};
 		0B427BDC263BF5510040A9E4 = {
 			isa = PBXGroup;
 			children = (
@@ -78,24 +117,14 @@
 		0B427BE7263BF5510040A9E4 /* BoomR */ = {
 			isa = PBXGroup;
 			children = (
+				0B2C5704264352AA00C2DF8A /* Game Specifics */,
+				0B2C57032643527000C2DF8A /* Main */,
+				0B2C57012643524400C2DF8A /* Resources */,
+				0B2C56FF2643520900C2DF8A /* Level Scenes */,
 				0B427BE8263BF5510040A9E4 /* AppDelegate.swift */,
-				0B427BEA263BF5510040A9E4 /* GameScene.sks */,
 				0B427BEC263BF5510040A9E4 /* Actions.sks */,
-				0B427BEE263BF5510040A9E4 /* GameScene.swift */,
-				0B11B7CC26418E970089A411 /* Smoke.sks */,
-				0B11B7C626418CE00089A411 /* Fire.sks */,
-				0B427BF0263BF5510040A9E4 /* GameViewController.swift */,
-				0B427BF2263BF5510040A9E4 /* Main.storyboard */,
 				0B427BF5263BF5510040A9E4 /* Assets.xcassets */,
 				0B427BF7263BF5520040A9E4 /* Info.plist */,
-				0B11B7C926418D0D0089A411 /* Spark.sks */,
-				0B11B7CF264194160089A411 /* LevelStruct.swift */,
-				0BD9D70E2642946D00F7C10D /* SceneViewController.swift */,
-				0B2FA78126414F0800C93236 /* lv1.sks */,
-				0B2C56EC26430DCA00C2DF8A /* lv2.sks */,
-				0B2C56F226431F4600C2DF8A /* lv3.sks */,
-				0B2C56EF26431A0400C2DF8A /* SelectLevelViewController.swift */,
-				0B2C56F826434D8C00C2DF8A /* Launchscreen.storyboard */,
 			);
 			path = BoomR;
 			sourceTree = "<group>";
@@ -160,7 +189,6 @@
 				0B2C56ED26430DCA00C2DF8A /* lv2.sks in Resources */,
 				0B427BF4263BF5510040A9E4 /* Main.storyboard in Resources */,
 				0B2FA78226414F0800C93236 /* lv1.sks in Resources */,
-				0B427BEB263BF5510040A9E4 /* GameScene.sks in Resources */,
 				0B11B7CA26418D0D0089A411 /* Spark.sks in Resources */,
 				0B11B7C726418CE00089A411 /* Fire.sks in Resources */,
 				0B427BF6263BF5510040A9E4 /* Assets.xcassets in Resources */,
