@@ -29,6 +29,7 @@ class SceneViewController: UIViewController, TransitionDelegate{
     func returnToMainMenu(){
         print("in con")
         dismiss(animated: false, completion: nil)
+        
         print("GOT HERE")
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        guard  let storyboard = appDelegate.window?.rootViewController?.storyboard else { return }

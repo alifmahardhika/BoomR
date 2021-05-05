@@ -47,6 +47,9 @@ class GameViewController: UIViewController{
 //        }
     }
     
+    @IBAction func backToVC1(segue: UIStoryboardSegue) {
+
+    }
     
     @IBAction func touchedPlay(_ sender: Any) {
         let gsStrbd: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

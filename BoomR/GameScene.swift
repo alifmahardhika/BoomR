@@ -460,19 +460,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         else if isWon{
-//            todo next level\
-            print("got here")
-            createWinMenuDisplay(inner: inner)
+            if String((scene?.name)!) == "Level 3"{
+                createWinMenuDisplay(inner: inner)
+                let backToMenu = SKShapeNode(rect: CGRect(x: frame.midX - 130 , y: frame.midY - 140, width: 260, height: 50), cornerRadius: 10)
+                backToMenu.fillColor = hexStringToUIColor(hex:"#FFDC00")
+                backToMenu.strokeColor = UIColor .black
+                backToMenu.zPosition = 1
+        //        inner.position = CGPoint(self.size.width * 0.5, self.size.height * 0.5)
+        //        tryAgain.position = CGPoint(x: frame.midX, y: frame.midY)
+                backToMenu.name = "backToMenu"
+                
+                var menuLabel: SKLabelNode!
+                menuLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
+                menuLabel.fontColor = UIColor .black
+                menuLabel.text = "Back to menu"
+                menuLabel.name = "backToMenu"
+                
+                menuLabel.fontSize = 17
+                menuLabel.horizontalAlignmentMode = .right
+                menuLabel.position = CGPoint(x: tryAgain.frame.midX+47, y: tryAgain.frame.midY-8)
+                backToMenu.addChild(menuLabel)
+                inner.addChild(backToMenu)
+                return inner
+                
+            }
+            else {
+                createWinMenuDisplay(inner: inner)
 
-            tryLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
-            tryLabel.text = "NEXT LEVEL"
-            tryLabel.name = "nextLevel"
-            tryAgain.name = "nextLevel"
-            
-            tryLabel.fontSize = 17
-            tryLabel.horizontalAlignmentMode = .right
-            tryLabel.position = CGPoint(x: tryAgain.frame.midX+47, y: tryAgain.frame.midY-8)
-            tryAgain.addChild(tryLabel)
+                tryLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
+                tryLabel.text = "NEXT LEVEL"
+                tryLabel.name = "nextLevel"
+                tryAgain.name = "nextLevel"
+                
+                tryLabel.fontSize = 17
+                tryLabel.horizontalAlignmentMode = .right
+                tryLabel.position = CGPoint(x: tryAgain.frame.midX+47, y: tryAgain.frame.midY-8)
+                tryAgain.addChild(tryLabel)
+            }
         }
         inner.addChild(tryAgain)
         
