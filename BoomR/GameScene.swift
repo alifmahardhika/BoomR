@@ -26,9 +26,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var levelDetail = Level(life: 3, monsterCount: 2)
     var lifeArr : [SKSpriteNode] = []
     var monsterArr : [SKSpriteNode] = []
+    var isWon = false
+    var isLose = false
 //    var pauseBlock = SKSpriteNode()
     
     override func didMove(to view: SKView) {
+//        print(isWon)
         self.physicsWorld.contactDelegate = self
         
 //        life indicator
@@ -143,7 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if name == "tryAgain" || name == "innerMenu" || name == "backToMenu"
             {
                 print("Touched")
-                if name == "backToMenu" {
+                if name == "backToMenu" || name == "nextLevel" {
                     self.run(SKAction.wait(forDuration: 0),completion:{[unowned self] in
                         guard let delegate = self.delegate else { return }
                         self.view?.presentScene(nil)
@@ -219,12 +222,55 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         var menuMessage: SKLabelNode!
         menuMessage = SKLabelNode(fontNamed: "Arial-MT")
-        menuMessage.text = "The game is paused"
+        menuMessage.numberOfLines = 0
+        menuMessage.preferredMaxLayoutWidth = 200
+
+        menuMessage.lineBreakMode = .byWordWrapping
+        menuMessage.text = "Avoid the walls and hit The Monsters!"
         menuMessage.name = "innerMenu"
         menuMessage.fontSize = 20
         menuMessage.fontColor = UIColor .black
         menuMessage.horizontalAlignmentMode = .right
         menuMessage.position = CGPoint(x: inner.frame.midX+90, y: inner.frame.midY-100)
+        
+        inner.addChild(header)
+        inner.addChild(midEmoji)
+        inner.addChild(menuMessage)
+
+    }
+    
+    func createWinMenuDisplay(inner: SKShapeNode){
+        var header: SKLabelNode!
+        header = SKLabelNode(fontNamed: "Arial-BoldMT")
+        header.text = "You did it! YAY!"
+        header.name = "innerMenu"
+        header.fontSize = 26
+        header.fontColor = UIColor .black
+        header.horizontalAlignmentMode = .right
+        header.position = CGPoint(x: inner.frame.midX+95, y: inner.frame.midY+80)
+        
+        
+        var midEmoji: SKLabelNode!
+        midEmoji = SKLabelNode(fontNamed: "Arial-BoldMT")
+        midEmoji.text = "🎊🎉"
+        midEmoji.name = "innerMenu"
+        midEmoji.fontSize = 30
+        midEmoji.fontColor = UIColor .black
+        midEmoji.horizontalAlignmentMode = .right
+        midEmoji.position = CGPoint(x: inner.frame.midX+35, y: inner.frame.midY-10)
+        
+        var menuMessage: SKLabelNode!
+        menuMessage = SKLabelNode(fontNamed: "Arial-MT")
+        menuMessage.numberOfLines = 0
+        menuMessage.preferredMaxLayoutWidth = 200
+
+        menuMessage.lineBreakMode = .byWordWrapping
+        menuMessage.text = "That was brilliant! Ready for more?"
+        menuMessage.name = "innerMenu"
+        menuMessage.fontSize = 20
+        menuMessage.fontColor = UIColor .black
+        menuMessage.horizontalAlignmentMode = .right
+        menuMessage.position = CGPoint(x: inner.frame.midX+80, y: inner.frame.midY-100)
         
         inner.addChild(header)
         inner.addChild(midEmoji)
@@ -240,7 +286,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        inner.position = CGPoint(self.size.width * 0.5, self.size.height * 0.5)
 //        inner.position = CGPoint(x: frame.midX - 130, y: frame.midY - 80)
         inner.name = "innerMenu"
-        createInnerMenuDisplay(inner: inner)
 //        button
         let tryAgain = SKShapeNode(rect: CGRect(x: frame.midX - 130 , y: frame.midY - 140, width: 260, height: 50), cornerRadius: 10)
         tryAgain.fillColor = hexStringToUIColor(hex:"#F42C48")
@@ -248,15 +293,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tryAgain.zPosition = 1
         tryAgain.name = "tryAgain"
         
-        var tryLabel: SKLabelNode!
-        tryLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
-        tryLabel.text = "TRY AGAIN"
-        tryLabel.name = "tryAgain"
         
-        tryLabel.fontSize = 17
-        tryLabel.horizontalAlignmentMode = .right
-        tryLabel.position = CGPoint(x: tryAgain.frame.midX+47, y: tryAgain.frame.midY-8)
-        tryAgain.addChild(tryLabel)
+        var tryLabel: SKLabelNode!
+        if !isWon{
+            createInnerMenuDisplay(inner: inner)
+            tryLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
+            tryLabel.text = "TRY AGAIN"
+            tryLabel.name = "tryAgain"
+            
+            tryLabel.fontSize = 17
+            tryLabel.horizontalAlignmentMode = .right
+            tryLabel.position = CGPoint(x: tryAgain.frame.midX+47, y: tryAgain.frame.midY-8)
+            tryAgain.addChild(tryLabel)
+            
+        }
+        else if isWon{
+//            todo next level\
+            createWinMenuDisplay(inner: inner)
+
+            tryLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
+            tryLabel.text = "NEXT LEVEL"
+            tryLabel.name = "nextLevel"
+            
+            tryLabel.fontSize = 17
+            tryLabel.horizontalAlignmentMode = .right
+            tryLabel.position = CGPoint(x: tryAgain.frame.midX+47, y: tryAgain.frame.midY-8)
+            tryAgain.addChild(tryLabel)
+        }
         inner.addChild(tryAgain)
         
         
@@ -311,9 +374,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.updateAfterHit(crashed: crashed)
         
-        self.run(SKAction.wait(forDuration: 2)) {
+        if !isWon && !isLose{
+            self.run(SKAction.wait(forDuration: 1)) {
             self.addChild(player)
             self.centerPlayer()
+            }
+
         }
 //        addChild(player)
     }
@@ -331,15 +397,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let monNode = self.monsterArr.popLast()
             monNode!.removeFromParent()
             if levelDetail.monsterCount == 0 {
+                isWon = true
                 print("menank")
-//                todo win seq
+                addChild(createPauseBlock())
+                self.physicsWorld.speed = 0
             }
         }
         levelDetail.life -= 1
         let lifeNode = self.lifeArr.popLast()
         lifeNode!.removeFromParent()
-        if (levelDetail.life == 0){
-            print("KALAH")
+        if (levelDetail.life == 0) && (levelDetail.monsterCount > 0) {
+            isLose = true
+            print("kalah")
 //            todo failed seq
         }
         print(levelDetail)
