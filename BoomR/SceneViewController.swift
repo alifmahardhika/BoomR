@@ -27,11 +27,29 @@ class SceneViewController: UIViewController, TransitionDelegate{
     
     func returnToMainMenu(){
         print("in con")
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        guard  let storyboard = appDelegate.window?.rootViewController?.storyboard else { return }
-        if let vc = storyboard.instantiateInitialViewController() {
-            print("go to main menu")
-            self.present(vc, animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
+        print("GOT HERE")
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        guard  let storyboard = appDelegate.window?.rootViewController?.storyboard else { return }
+//        if let vc = storyboard.instantiateInitialViewController() {
+//            print("go to main menu")
+//            self.present(vc, animated: true, completion: nil)
+//        }
+    }
+    
+    func retry(){
+        print("in ret")
+//        dismiss(animated: true, completion: nil)
+        if let view = self.view as! SKView? {
+        if let scene = SKScene(fileNamed: "GameScene") {
+            scene.scaleMode = .aspectFill
+            scene.delegate = self as TransitionDelegate
+            scene.scaleMode = .aspectFill
+            view.presentScene(scene)
+        }
+        view.ignoresSiblingOrder = true
+        view.showsFPS = true
+        view.showsNodeCount = true
         }
     }
 }

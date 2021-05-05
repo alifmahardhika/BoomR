@@ -12,6 +12,7 @@ import CoreMotion
 
 protocol TransitionDelegate: SKSceneDelegate {
     func returnToMainMenu()
+    func retry()
 }
 
 
@@ -126,9 +127,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
 //    
-//    deinit {
-//        print("\n THE SCENE \((type(of: self))) WAS REMOVED FROM MEMORY (DEINIT) \n")
-//    }
+    deinit {
+        print("DEINITED")
+    }
     
     
 //    pause on touch
@@ -147,13 +148,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             {
                 print("Touched")
                 if name == "backToMenu" {
-                    print("touched menu")
-                    print(self.delegate)
                     self.run(SKAction.wait(forDuration: 0),completion:{[unowned self] in
                         guard let delegate = self.delegate else { return }
                         self.view?.presentScene(nil)
                         (delegate as! TransitionDelegate).returnToMainMenu()
                     })
+                }
+                else if name == "tryAgain"{
+                    print("retry")
+                    print(self.name)
+                    self.removeAllChildren()
+                    self.removeAllActions()
+                    self.run(SKAction.wait(forDuration: 0),completion:{[unowned self] in
+                        guard let delegate = self.delegate else { return }
+                        self.view?.presentScene(nil)
+                        (delegate as! TransitionDelegate).retry()
+                    })
+
                 }
                 return
             }
