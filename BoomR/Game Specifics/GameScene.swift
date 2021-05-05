@@ -126,25 +126,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        print("came here")
         let bodyA = contact.bodyA
         let bodyB = contact.bodyB
         
-        print(bodyA.categoryBitMask)
-        print(bodyB.categoryBitMask)
-
 //        1 = wall
 //        2 = monster
 //        42949.. = player
         if bodyA.categoryBitMask == 4294967295 && bodyB.categoryBitMask == 2 || bodyA.categoryBitMask == 2 && bodyB.categoryBitMask == 4294967295 {
-            print("HIT MONSTER")
             explode(player: player, crashed: bodyA.node!)
-            print("called explode")
         }
         else if bodyA.categoryBitMask == 4294967295 && bodyB.categoryBitMask == 1 || bodyA.categoryBitMask == 1 && bodyB.categoryBitMask == 4294967295 {
-            print("HIT WALL")
             explode(player: player, crashed: bodyA.node!)
-            print("called explode")
         }
 
     }
@@ -168,7 +160,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             if name == "tryAgain" || name == "innerMenu" || name == "backToMenu" || name == "nextLevel"
             {
-                print("Touched")
                 if name == "backToMenu" {
                     self.run(SKAction.wait(forDuration: 0),completion:{[unowned self] in
                         guard let delegate = self.delegate else { return }
@@ -177,8 +168,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     })
                 }
                 else if name == "tryAgain"{
-                    print("retry")
-                    print(self.name!)
                     self.removeAllChildren()
                     self.removeAllActions()
                     self.run(SKAction.wait(forDuration: 0),completion:{[unowned self] in
@@ -189,7 +178,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
                 }
                 else if name == "nextLevel" {
-                    print("next")
                     self.removeAllChildren()
                     self.removeAllActions()
                     self.run(SKAction.wait(forDuration: 0),completion:{[unowned self] in
@@ -232,13 +220,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func updateAfterHit(crashed: SKNode){
         if (crashed.name == "monster"){
-            print("getin")
             levelDetail.monsterCount -= 1
             let monNode = self.monsterArr.popLast()
             monNode!.removeFromParent()
             if levelDetail.monsterCount == 0 {
                 isWon = true
-                print("menank")
                 addChild(createPauseBlock())
                 self.physicsWorld.speed = 0
             }
@@ -250,8 +236,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             isLose = true
             addChild(createPauseBlock())
             self.physicsWorld.speed = 0
-            print("kalah")
-//            todo failed seq
         }
     }
     func playSound(sound : SKAction)
