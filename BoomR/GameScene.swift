@@ -17,6 +17,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var levelDetail = Level(life: 3, monsterCount: 2)
     var lifeArr : [SKSpriteNode] = []
     var monsterArr : [SKSpriteNode] = []
+//    var pauseBlock = SKSpriteNode()
     
     override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
@@ -73,6 +74,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player = self.childNode(withName: "player") as! SKSpriteNode
         monster = self.childNode(withName: "monster") as! SKSpriteNode
         wall = self.childNode(withName: "wall") as! SKSpriteNode
+//        pauseBlock = self.childNode(withName: "pauseBlock") as! SKSpriteNode
+//        pauseBlock.position = CGPoint(x: frame.midX, y: frame.midY)
+//        pauseBlock.isHidden = true
+//        pauseBlock.removeFromParent()
         
         
         player.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -113,20 +118,79 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
+    
 //    pause on touch
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
        
         next?.touchesBegan(touches, with: event)
-       
-        scene?.view?.isPaused = !(scene?.view!.isPaused)!
+//
+        if let pauseBlock = childNode(withName: "//pauseBlock") as! SKSpriteNode?{
+            if let inner = childNode(withName: "//innerMenu") as! SKShapeNode?{
+                inner.removeFromParent()
+            }
+//            pause to play
+            print("ps to pa")
+            pauseBlock.removeFromParent()
+            self.physicsWorld.speed = 1
+            return
+        }
+//            play to pause
+        
+        let pauseBlock = createPauseBlock()
+        print("pa to ps")
+        pauseBlock.position = CGPoint(x: frame.midX, y: frame.midY)
+        pauseBlock.name = "pauseBlock"
+        self.addChild(pauseBlock)
+//            scene?.view?.isPaused = true
+        self.physicsWorld.speed = 0
+    
+    }
+    
+    func createPauseBlock() -> SKSpriteNode{
+        let pauseBlock = SKSpriteNode(color: UIColor .gray, size: CGSize(width: 400, height:850))
+        pauseBlock.alpha = 0.5
+        pauseBlock.position = CGPoint(x: frame.midX, y: frame.midY)
+        
+//        self.addChild(createMenuBlock())
+        createMenuBlock()
+        return pauseBlock
+    }
+    
+    func createMenuBlock() -> SKShapeNode {
+        let inner = SKShapeNode(rect: CGRect(x: frame.midX - 130, y: frame.midY - 80, width: 260, height: 300), cornerRadius: 10)
+        inner.fillColor = hexStringToUIColor(hex:"#FFDC00")
+        inner.strokeColor = UIColor .black
+        inner.zPosition = 1
+//        inner.position = CGPoint(self.size.width * 0.5, self.size.height * 0.5)
+//        inner.position = CGPoint(x: frame.midX - 130, y: frame.midY - 80)
+        inner.name = "innerMenu"
+        
+//        button
+        let tryAgain = SKShapeNode(rect: CGRect(x: frame.midX - 130 , y: frame.midY - 140, width: 260, height: 50), cornerRadius: 10)
+        tryAgain.fillColor = hexStringToUIColor(hex:"#F42C48")
+        tryAgain.strokeColor = UIColor .black
+        tryAgain.zPosition = 1
+        tryAgain.name = "tryAgain"
+        inner.addChild(tryAgain)
+        
+//        button menu
+        let backToMenu = SKShapeNode(rect: CGRect(x: frame.midX - 130 , y: frame.midY - 200, width: 260, height: 50), cornerRadius: 10)
+        backToMenu.fillColor = hexStringToUIColor(hex:"#FFDC00")
+        backToMenu.strokeColor = UIColor .black
+        backToMenu.zPosition = 1
+//        inner.position = CGPoint(self.size.width * 0.5, self.size.height * 0.5)
+//        tryAgain.position = CGPoint(x: frame.midX, y: frame.midY)
+        backToMenu.name = "backToMenu"
+        inner.addChild(backToMenu)
+        
+        
+        self.addChild(inner)
+        return inner
     }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        if scene?.view?.isPaused == true {
-            print("PAUSED")
-        }
     }
     
     func explode(player: SKNode, crashed: SKNode) {
