@@ -11,6 +11,7 @@
 		0B11B7CA26418D0D0089A411 /* Spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B11B7C926418D0D0089A411 /* Spark.sks */; };
 		0B11B7CD26418E970089A411 /* Smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B11B7CC26418E970089A411 /* Smoke.sks */; };
 		0B11B7D0264194160089A411 /* LevelStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B11B7CF264194160089A411 /* LevelStruct.swift */; };
+		0B2C56ED26430DCA00C2DF8A /* lv2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B2C56EC26430DCA00C2DF8A /* lv2.sks */; };
 		0B2FA78226414F0800C93236 /* lv1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B2FA78126414F0800C93236 /* lv1.sks */; };
 		0B2FA7852641522900C93236 /* lv1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FA7842641522900C93236 /* lv1.swift */; };
 		0B427BE9263BF5510040A9E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B427BE8263BF5510040A9E4 /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 		0B11B7C926418D0D0089A411 /* Spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Spark.sks; sourceTree = "<group>"; };
 		0B11B7CC26418E970089A411 /* Smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Smoke.sks; sourceTree = "<group>"; };
 		0B11B7CF264194160089A411 /* LevelStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelStruct.swift; sourceTree = "<group>"; };
+		0B2C56EC26430DCA00C2DF8A /* lv2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = lv2.sks; sourceTree = "<group>"; };
 		0B2FA78126414F0800C93236 /* lv1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = lv1.sks; sourceTree = "<group>"; };
 		0B2FA7842641522900C93236 /* lv1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lv1.swift; sourceTree = "<group>"; };
 		0B427BE5263BF5510040A9E4 /* BoomR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoomR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +89,7 @@
 				0B11B7C926418D0D0089A411 /* Spark.sks */,
 				0B11B7CF264194160089A411 /* LevelStruct.swift */,
 				0BD9D70E2642946D00F7C10D /* SceneViewController.swift */,
+				0B2C56EC26430DCA00C2DF8A /* lv2.sks */,
 			);
 			path = BoomR;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B2C56ED26430DCA00C2DF8A /* lv2.sks in Resources */,
 				0B427BF4263BF5510040A9E4 /* Main.storyboard in Resources */,
 				0B2FA78226414F0800C93236 /* lv1.sks in Resources */,
 				0B427BEB263BF5510040A9E4 /* GameScene.sks in Resources */,

@@ -53,6 +53,7 @@ class GameViewController: UIViewController{
         let vc = gsStrbd.instantiateViewController(identifier: "game") as! SceneViewController
 //      present new storyboard
         vc.modalPresentationStyle = .fullScreen
+        vc.selectedLevel = 1
         present(vc, animated: true)
     }
     override var shouldAutorotate: Bool {

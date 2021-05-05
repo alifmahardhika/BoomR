@@ -13,6 +13,7 @@ import CoreMotion
 protocol TransitionDelegate: SKSceneDelegate {
     func returnToMainMenu()
     func retry()
+    func nextLevel()
 }
 
 
@@ -23,14 +24,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var player = SKSpriteNode()
     var monster = SKSpriteNode()
     var wall = SKSpriteNode()
-    var levelDetail = Level(life: 3, monsterCount: 2)
+    var levelDetail: Level!
     var lifeArr : [SKSpriteNode] = []
     var monsterArr : [SKSpriteNode] = []
     var isWon = false
     var isLose = false
+    var monCount = 0
 //    var pauseBlock = SKSpriteNode()
     
     override func didMove(to view: SKView) {
+        
+        scene?.enumerateChildNodes(withName: "monster") {
+            (node, stop) in
+            
+            self.monCount += 1
+            
+//            if let name = node.name, name.contains("triangle") {
+//                stop.initialize(to: true)
+//            }
+        }
+        self.levelDetail = Level(life: 4, monsterCount: monCount)
+        
+        
 //        print(isWon)
         self.physicsWorld.contactDelegate = self
         
@@ -78,10 +93,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(monIndex)
             monsterArr.append(monIndex)
             positionAdd = positionAdd + 30.0
+            
+            var lvlHeader: SKLabelNode!
+            lvlHeader = SKLabelNode(fontNamed: "Arial-BoldMT")
+            lvlHeader.text = scene?.name
+            lvlHeader.name = "lvlHeader"
+            lvlHeader.fontSize = 26
+            lvlHeader.fontColor = UIColor .white
+            lvlHeader.horizontalAlignmentMode = .right
+            lvlHeader.position = CGPoint(x: self.frame.midX + 35, y: self.frame.height - 90)
+            addChild(lvlHeader)
 
         }
-        
-        
         
         player = self.childNode(withName: "player") as! SKSpriteNode
         monster = self.childNode(withName: "monster") as! SKSpriteNode
@@ -143,10 +166,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         if let name = touchedNode.name
         {
-            if name == "tryAgain" || name == "innerMenu" || name == "backToMenu"
+            if name == "tryAgain" || name == "innerMenu" || name == "backToMenu" || name == "nextLevel"
             {
                 print("Touched")
-                if name == "backToMenu" || name == "nextLevel" {
+                if name == "backToMenu" {
                     self.run(SKAction.wait(forDuration: 0),completion:{[unowned self] in
                         guard let delegate = self.delegate else { return }
                         self.view?.presentScene(nil)
@@ -155,7 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 else if name == "tryAgain"{
                     print("retry")
-                    print(self.name)
+                    print(self.name!)
                     self.removeAllChildren()
                     self.removeAllActions()
                     self.run(SKAction.wait(forDuration: 0),completion:{[unowned self] in
@@ -164,6 +187,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         (delegate as! TransitionDelegate).retry()
                     })
 
+                }
+                else if name == "nextLevel" {
+                    print("next")
+                    self.removeAllChildren()
+                    self.removeAllActions()
+                    self.run(SKAction.wait(forDuration: 0),completion:{[unowned self] in
+                        guard let delegate = self.delegate else { return }
+                        self.view?.presentScene(nil)
+                        (delegate as! TransitionDelegate).nextLevel()
+                    })
                 }
                 return
             }
@@ -190,6 +223,80 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     }
     
+    
+    
+    override func update(_ currentTime: TimeInterval) {
+        // Called before each frame is rendered
+    }
+    
+    
+    func updateAfterHit(crashed: SKNode){
+        if (crashed.name == "monster"){
+            print("getin")
+            levelDetail.monsterCount -= 1
+            let monNode = self.monsterArr.popLast()
+            monNode!.removeFromParent()
+            if levelDetail.monsterCount == 0 {
+                isWon = true
+                print("menank")
+                addChild(createPauseBlock())
+                self.physicsWorld.speed = 0
+            }
+        }
+        levelDetail.life -= 1
+        let lifeNode = self.lifeArr.popLast()
+        lifeNode!.removeFromParent()
+        if (levelDetail.life == 0) && (levelDetail.monsterCount > 0) {
+            isLose = true
+            addChild(createPauseBlock())
+            self.physicsWorld.speed = 0
+            print("kalah")
+//            todo failed seq
+        }
+    }
+    
+    
+    
+    
+//    ================================= node generating functions
+    
+    func explode(player: SKNode, crashed: SKNode) {
+        if let sparkEmitter = SKEmitterNode(fileNamed: "Spark") {
+            sparkEmitter.position = crashed.position
+            addChild(sparkEmitter)
+        }
+        
+        if let smokeEmitter = SKEmitterNode(fileNamed: "Smoke") {
+            smokeEmitter.position = crashed.position
+            addChild(smokeEmitter)
+        }
+        if let fireEmitter = SKEmitterNode(fileNamed: "Fire") {
+            fireEmitter.position = crashed.position
+            addChild(fireEmitter)
+        }
+        
+
+        player.removeFromParent()
+        crashed.removeFromParent()
+        
+        self.updateAfterHit(crashed: crashed)
+        
+        if !isWon && !isLose{
+            self.run(SKAction.wait(forDuration: 1)) {
+            self.addChild(player)
+            self.centerPlayer()
+            }
+
+        }
+//        addChild(player)
+    }
+    
+    func centerPlayer() {
+        player.physicsBody?.velocity = CGVector(dx: 0.0, dy: 0.0)
+        let moveAction = SKAction.move(to: CGPoint(x: 194.022, y: 198.448), duration: 0.0)
+        player.run(moveAction)
+    }
+    
     func createPauseBlock() -> SKSpriteNode{
         let pauseBlock = SKSpriteNode(color: UIColor .gray, size: CGSize(width: 400, height:850))
         pauseBlock.alpha = 0.5
@@ -203,7 +310,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createInnerMenuDisplay(inner: SKShapeNode){
         var header: SKLabelNode!
         header = SKLabelNode(fontNamed: "Arial-BoldMT")
-        header.text = "TIMEOUT!"
+        header.text = "PAUSED!"
         header.name = "innerMenu"
         header.fontSize = 26
         header.fontColor = UIColor .black
@@ -278,6 +385,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
+    func createLoseDisplay(inner: SKShapeNode){
+        var header: SKLabelNode!
+        header = SKLabelNode(fontNamed: "Arial-BoldMT")
+        header.numberOfLines = 0
+        header.preferredMaxLayoutWidth = 170
+        header.text = "Whoops.. You failed!"
+        header.name = "innerMenu"
+        header.fontSize = 26
+        header.fontColor = UIColor .black
+        header.horizontalAlignmentMode = .right
+        header.position = CGPoint(x: inner.frame.midX+75, y: inner.frame.midY+70)
+        
+        
+        var midEmoji: SKLabelNode!
+        midEmoji = SKLabelNode(fontNamed: "Arial-BoldMT")
+        midEmoji.text = "😵😵😵😵😵"
+        midEmoji.name = "innerMenu"
+        midEmoji.fontSize = 30
+        midEmoji.fontColor = UIColor .black
+        midEmoji.horizontalAlignmentMode = .right
+        midEmoji.position = CGPoint(x: inner.frame.midX+80, y: inner.frame.midY-10)
+        
+        var menuMessage: SKLabelNode!
+        menuMessage = SKLabelNode(fontNamed: "Arial-MT")
+        menuMessage.numberOfLines = 0
+        menuMessage.preferredMaxLayoutWidth = 200
+
+        menuMessage.lineBreakMode = .byWordWrapping
+        menuMessage.text = "Worry not! You can always try again!"
+        menuMessage.name = "innerMenu"
+        menuMessage.fontSize = 20
+        menuMessage.fontColor = UIColor .black
+        menuMessage.horizontalAlignmentMode = .right
+        menuMessage.position = CGPoint(x: inner.frame.midX+85, y: inner.frame.midY-100)
+        
+        inner.addChild(header)
+        inner.addChild(midEmoji)
+        inner.addChild(menuMessage)
+
+    }
+    
     func createMenuBlock() -> SKShapeNode {
         let inner = SKShapeNode(rect: CGRect(x: frame.midX - 130, y: frame.midY - 80, width: 260, height: 300), cornerRadius: 10)
         inner.fillColor = hexStringToUIColor(hex:"#FFDC00")
@@ -296,7 +444,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         var tryLabel: SKLabelNode!
         if !isWon{
-            createInnerMenuDisplay(inner: inner)
+            if isLose{
+                createLoseDisplay(inner: inner)
+            } else {
+                createInnerMenuDisplay(inner: inner)
+            }
             tryLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
             tryLabel.text = "TRY AGAIN"
             tryLabel.name = "tryAgain"
@@ -309,11 +461,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else if isWon{
 //            todo next level\
+            print("got here")
             createWinMenuDisplay(inner: inner)
 
             tryLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
             tryLabel.text = "NEXT LEVEL"
             tryLabel.name = "nextLevel"
+            tryAgain.name = "nextLevel"
             
             tryLabel.fontSize = 17
             tryLabel.horizontalAlignmentMode = .right
@@ -347,70 +501,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 //        self.addChild(inner)
         return inner
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
-    
-    func explode(player: SKNode, crashed: SKNode) {
-        if let sparkEmitter = SKEmitterNode(fileNamed: "Spark") {
-            sparkEmitter.position = crashed.position
-            addChild(sparkEmitter)
-        }
-        
-        if let smokeEmitter = SKEmitterNode(fileNamed: "Smoke") {
-            smokeEmitter.position = crashed.position
-            addChild(smokeEmitter)
-        }
-        if let fireEmitter = SKEmitterNode(fileNamed: "Fire") {
-            fireEmitter.position = crashed.position
-            addChild(fireEmitter)
-        }
-        
-
-        player.removeFromParent()
-        crashed.removeFromParent()
-        
-        self.updateAfterHit(crashed: crashed)
-        
-        if !isWon && !isLose{
-            self.run(SKAction.wait(forDuration: 1)) {
-            self.addChild(player)
-            self.centerPlayer()
-            }
-
-        }
-//        addChild(player)
-    }
-    
-    func centerPlayer() {
-        player.physicsBody?.velocity = CGVector(dx: 0.0, dy: 0.0)
-        let moveAction = SKAction.move(to: CGPoint(x: 194.022, y: 198.448), duration: 0.0)
-        player.run(moveAction)
-    }
-    
-    func updateAfterHit(crashed: SKNode){
-        if (crashed.name == "monster"){
-            print("getin")
-            levelDetail.monsterCount -= 1
-            let monNode = self.monsterArr.popLast()
-            monNode!.removeFromParent()
-            if levelDetail.monsterCount == 0 {
-                isWon = true
-                print("menank")
-                addChild(createPauseBlock())
-                self.physicsWorld.speed = 0
-            }
-        }
-        levelDetail.life -= 1
-        let lifeNode = self.lifeArr.popLast()
-        lifeNode!.removeFromParent()
-        if (levelDetail.life == 0) && (levelDetail.monsterCount > 0) {
-            isLose = true
-            print("kalah")
-//            todo failed seq
-        }
-        print(levelDetail)
     }
 }
