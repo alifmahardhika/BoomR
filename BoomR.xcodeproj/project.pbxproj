@@ -20,6 +20,7 @@
 		0B427BF1263BF5510040A9E4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B427BF0263BF5510040A9E4 /* GameViewController.swift */; };
 		0B427BF4263BF5510040A9E4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B427BF2263BF5510040A9E4 /* Main.storyboard */; };
 		0B427BF6263BF5510040A9E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B427BF5263BF5510040A9E4 /* Assets.xcassets */; };
+		0BD9D70F2642946D00F7C10D /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD9D70E2642946D00F7C10D /* SceneViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		0B427BF3263BF5510040A9E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B427BF5263BF5510040A9E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B427BF7263BF5520040A9E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0BD9D70E2642946D00F7C10D /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				0B427BF7263BF5520040A9E4 /* Info.plist */,
 				0B11B7C926418D0D0089A411 /* Spark.sks */,
 				0B11B7CF264194160089A411 /* LevelStruct.swift */,
+				0BD9D70E2642946D00F7C10D /* SceneViewController.swift */,
 			);
 			path = BoomR;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 				0B427BEF263BF5510040A9E4 /* GameScene.swift in Sources */,
 				0B427BF1263BF5510040A9E4 /* GameViewController.swift in Sources */,
 				0B427BE9263BF5510040A9E4 /* AppDelegate.swift in Sources */,
+				0BD9D70F2642946D00F7C10D /* SceneViewController.swift in Sources */,
 				0B2FA7852641522900C93236 /* lv1.swift in Sources */,
 				0B11B7D0264194160089A411 /* LevelStruct.swift in Sources */,
 			);

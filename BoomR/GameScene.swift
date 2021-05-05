@@ -9,7 +9,15 @@ import SpriteKit
 import GameplayKit
 import CoreMotion
 
+
+protocol TransitionDelegate: SKSceneDelegate {
+    func returnToMainMenu()
+}
+
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
+//    var gameSceneDelegate
+    
     var manager = CMMotionManager()
     var player = SKSpriteNode()
     var monster = SKSpriteNode()
@@ -23,10 +31,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         
 //        life indicator
-        var lifeIndexCount = 0
+        _ = 0
         var positionAdd:CGFloat = 10.0
 
-        for lifeIndexCount in 0..<levelDetail.life {
+        for _ in 0..<levelDetail.life {
 
             let lifeIndex = SKSpriteNode(imageNamed: "ball")
             lifeIndex.size = CGSize(width: 20, height: 20)
@@ -35,7 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
             let lifeIndexMove = SKAction.move(to: CGPoint(x: (size.width * 0.05) + positionAdd, y: 735), duration: TimeInterval(0.7))
 
-            let lifeIndexRotation = SKAction.rotate(byAngle: CGFloat(-2 * M_PI), duration: 0.3)
+            let lifeIndexRotation = SKAction.rotate(byAngle: CGFloat(-2 * Double.pi), duration: 0.3)
 
             lifeIndex.run(SKAction.sequence([lifeIndexMove, lifeIndexRotation]))
 
@@ -47,10 +55,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
 //        monster indicator
-        var monsterIndexCount = 0
-        var monPositionAdd:CGFloat = 0
+        _ = 0
+        var _:CGFloat = 0
 
-        for monsterIndexCount in 0..<levelDetail.monsterCount {
+        for _ in 0..<levelDetail.monsterCount {
 
             let monIndex = SKSpriteNode(imageNamed: "alien")
             monIndex.size = CGSize(width: 25, height: 25)
@@ -59,7 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             let monsterIndex = SKAction.move(to: CGPoint(x: 460 - positionAdd, y: 735), duration: TimeInterval(0.7))
 
-            let monIndexRot = SKAction.rotate(byAngle: CGFloat(-2 * M_PI), duration: 0.3)
+            let monIndexRot = SKAction.rotate(byAngle: CGFloat(-2 * Double.pi), duration: 0.3)
 
             monIndex.run(SKAction.sequence([monsterIndex, monIndexRot]))
 
@@ -117,6 +125,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
     }
+//    
+//    deinit {
+//        print("\n THE SCENE \((type(of: self))) WAS REMOVED FROM MEMORY (DEINIT) \n")
+//    }
     
     
 //    pause on touch
@@ -124,13 +136,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         super.touchesBegan(touches, with: event)
        
         next?.touchesBegan(touches, with: event)
+        
+        let touch:UITouch = touches.first! as UITouch
+        let positionInScene = touch.location(in: self)
+        let touchedNode = self.atPoint(positionInScene)
+
+        if let name = touchedNode.name
+        {
+            if name == "tryAgain" || name == "innerMenu" || name == "backToMenu"
+            {
+                print("Touched")
+                if name == "backToMenu" {
+                    print("touched menu")
+                    print(self.delegate)
+                    self.run(SKAction.wait(forDuration: 0),completion:{[unowned self] in
+                        guard let delegate = self.delegate else { return }
+                        self.view?.presentScene(nil)
+                        (delegate as! TransitionDelegate).returnToMainMenu()
+                    })
+                }
+                return
+            }
+        }
+
 //
         if let pauseBlock = childNode(withName: "//pauseBlock") as! SKSpriteNode?{
             if let inner = childNode(withName: "//innerMenu") as! SKShapeNode?{
                 inner.removeFromParent()
             }
 //            pause to play
-            print("ps to pa")
             pauseBlock.removeFromParent()
             self.physicsWorld.speed = 1
             return
@@ -138,7 +172,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            play to pause
         
         let pauseBlock = createPauseBlock()
-        print("pa to ps")
         pauseBlock.position = CGPoint(x: frame.midX, y: frame.midY)
         pauseBlock.name = "pauseBlock"
         self.addChild(pauseBlock)
@@ -152,8 +185,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseBlock.alpha = 0.5
         pauseBlock.position = CGPoint(x: frame.midX, y: frame.midY)
         
-//        self.addChild(createMenuBlock())
-        createMenuBlock()
+        self.addChild(createMenuBlock())
+//        createMenuBlock()
         return pauseBlock
     }
     
@@ -172,7 +205,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tryAgain.strokeColor = UIColor .black
         tryAgain.zPosition = 1
         tryAgain.name = "tryAgain"
+        
+        var tryLabel: SKLabelNode!
+        tryLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
+        tryLabel.text = "TRY AGAIN"
+        tryLabel.name = "tryAgain"
+        
+        tryLabel.fontSize = 17
+        tryLabel.horizontalAlignmentMode = .right
+        tryLabel.position = CGPoint(x: tryAgain.frame.midX+47, y: tryAgain.frame.midY-8)
+        tryAgain.addChild(tryLabel)
         inner.addChild(tryAgain)
+        
         
 //        button menu
         let backToMenu = SKShapeNode(rect: CGRect(x: frame.midX - 130 , y: frame.midY - 200, width: 260, height: 50), cornerRadius: 10)
@@ -182,10 +226,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        inner.position = CGPoint(self.size.width * 0.5, self.size.height * 0.5)
 //        tryAgain.position = CGPoint(x: frame.midX, y: frame.midY)
         backToMenu.name = "backToMenu"
+        
+        var menuLabel: SKLabelNode!
+        menuLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
+        menuLabel.fontColor = UIColor .black
+        menuLabel.text = "Back to menu"
+        menuLabel.name = "backToMenu"
+        
+        menuLabel.fontSize = 17
+        menuLabel.horizontalAlignmentMode = .right
+        menuLabel.position = CGPoint(x: backToMenu.frame.midX+53, y: backToMenu.frame.midY-8)
+        backToMenu.addChild(menuLabel)
         inner.addChild(backToMenu)
         
         
-        self.addChild(inner)
+//        self.addChild(inner)
         return inner
     }
     
