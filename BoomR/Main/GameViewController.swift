@@ -8,14 +8,49 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class GameViewController: UIViewController{
 
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var levelButton: UIButton!
+    var player: AVAudioPlayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = hexStringToUIColor(hex:"#FFDC00")
+        
+//        var AudioPlayer = AVAudioPlayer()
+        
+        let fileUrl = Bundle.main.path(forResource: "Monkeys-Spinning-Monkeys", ofType: "mp3")
+        do {
+            try AVAudioSession.sharedInstance().setMode(.default)
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+            
+            guard let fileUrl = fileUrl else{
+                return
+            }
+            player = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: fileUrl))
+            
+            guard let player = player else{
+                return
+            }
+            player.numberOfLoops = -1
+            player.volume = 0.8
+            player.play()
+            
+        } catch {
+            print("failed")
+        }
+        
+        
+//        let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: "Monkeys-Spinning-Monkeys", ofType: "mp3")!)
+//        print(AssortedMusics)
+//        AudioPlayer = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
+//        AudioPlayer.prepareToPlay()
+//        AudioPlayer.numberOfLoops = -1
+//        AudioPlayer.play()
+//
         playButton.layer.cornerRadius = 5
         playButton.layer.borderWidth = 1
         playButton.layer.borderColor = UIColor.black.cgColor

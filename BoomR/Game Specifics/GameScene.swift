@@ -254,6 +254,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            todo failed seq
         }
     }
+    func playSound(sound : SKAction)
+    {
+        run(sound)
+    }
     
     
     
@@ -274,6 +278,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             fireEmitter.position = crashed.position
             addChild(fireEmitter)
         }
+    
+//        randomize sound effect
+        let randomInt = Int.random(in: 0..<10)
+        if randomInt == 9 || randomInt == 8{
+            let sound = SKAction.playSoundFileNamed("what.mp3", waitForCompletion: false)
+            playSound(sound: sound)
+        }
+        else if randomInt == 7 || randomInt == 6 {
+            let sound = SKAction.playSoundFileNamed("skadoosh.mp3", waitForCompletion: false)
+            playSound(sound: sound)
+        }
+        else{
+            let sound = SKAction.playSoundFileNamed("normal.mp3", waitForCompletion: false)
+            playSound(sound: sound)
+        }
+
         
 
         player.removeFromParent()

@@ -15,6 +15,10 @@
 		0B2C56F026431A0400C2DF8A /* SelectLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2C56EF26431A0400C2DF8A /* SelectLevelViewController.swift */; };
 		0B2C56F326431F4600C2DF8A /* lv3.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B2C56F226431F4600C2DF8A /* lv3.sks */; };
 		0B2C56F926434D8C00C2DF8A /* Launchscreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B2C56F826434D8C00C2DF8A /* Launchscreen.storyboard */; };
+		0B2C5712264354CD00C2DF8A /* what.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0B2C570F264354CD00C2DF8A /* what.mp3 */; };
+		0B2C5713264354CD00C2DF8A /* skadoosh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0B2C5710264354CD00C2DF8A /* skadoosh.mp3 */; };
+		0B2C5714264354CD00C2DF8A /* normal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0B2C5711264354CD00C2DF8A /* normal.mp3 */; };
+		0B2C571726435A6A00C2DF8A /* Monkeys-Spinning-Monkeys.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0B2C571626435A6A00C2DF8A /* Monkeys-Spinning-Monkeys.mp3 */; };
 		0B2FA78226414F0800C93236 /* lv1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B2FA78126414F0800C93236 /* lv1.sks */; };
 		0B427BE9263BF5510040A9E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B427BE8263BF5510040A9E4 /* AppDelegate.swift */; };
 		0B427BED263BF5510040A9E4 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0B427BEC263BF5510040A9E4 /* Actions.sks */; };
@@ -34,6 +38,10 @@
 		0B2C56EF26431A0400C2DF8A /* SelectLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLevelViewController.swift; sourceTree = "<group>"; };
 		0B2C56F226431F4600C2DF8A /* lv3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = lv3.sks; sourceTree = "<group>"; };
 		0B2C56F826434D8C00C2DF8A /* Launchscreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launchscreen.storyboard; sourceTree = "<group>"; };
+		0B2C570F264354CD00C2DF8A /* what.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = what.mp3; sourceTree = "<group>"; };
+		0B2C5710264354CD00C2DF8A /* skadoosh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = skadoosh.mp3; sourceTree = "<group>"; };
+		0B2C5711264354CD00C2DF8A /* normal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = normal.mp3; sourceTree = "<group>"; };
+		0B2C571626435A6A00C2DF8A /* Monkeys-Spinning-Monkeys.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Monkeys-Spinning-Monkeys.mp3"; sourceTree = "<group>"; };
 		0B2FA78126414F0800C93236 /* lv1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = lv1.sks; sourceTree = "<group>"; };
 		0B427BE5263BF5510040A9E4 /* BoomR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoomR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B427BE8263BF5510040A9E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +78,7 @@
 		0B2C57012643524400C2DF8A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0B2C57062643533400C2DF8A /* Sounds */,
 				0B11B7CC26418E970089A411 /* Smoke.sks */,
 				0B11B7C926418D0D0089A411 /* Spark.sks */,
 				0B11B7C626418CE00089A411 /* Fire.sks */,
@@ -96,6 +105,17 @@
 				0BD9D70E2642946D00F7C10D /* SceneViewController.swift */,
 			);
 			path = "Game Specifics";
+			sourceTree = "<group>";
+		};
+		0B2C57062643533400C2DF8A /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				0B2C571626435A6A00C2DF8A /* Monkeys-Spinning-Monkeys.mp3 */,
+				0B2C5711264354CD00C2DF8A /* normal.mp3 */,
+				0B2C5710264354CD00C2DF8A /* skadoosh.mp3 */,
+				0B2C570F264354CD00C2DF8A /* what.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		0B427BDC263BF5510040A9E4 = {
@@ -188,9 +208,13 @@
 			files = (
 				0B2C56ED26430DCA00C2DF8A /* lv2.sks in Resources */,
 				0B427BF4263BF5510040A9E4 /* Main.storyboard in Resources */,
+				0B2C5714264354CD00C2DF8A /* normal.mp3 in Resources */,
 				0B2FA78226414F0800C93236 /* lv1.sks in Resources */,
 				0B11B7CA26418D0D0089A411 /* Spark.sks in Resources */,
+				0B2C5712264354CD00C2DF8A /* what.mp3 in Resources */,
+				0B2C571726435A6A00C2DF8A /* Monkeys-Spinning-Monkeys.mp3 in Resources */,
 				0B11B7C726418CE00089A411 /* Fire.sks in Resources */,
+				0B2C5713264354CD00C2DF8A /* skadoosh.mp3 in Resources */,
 				0B427BF6263BF5510040A9E4 /* Assets.xcassets in Resources */,
 				0B427BED263BF5510040A9E4 /* Actions.sks in Resources */,
 				0B11B7CD26418E970089A411 /* Smoke.sks in Resources */,
