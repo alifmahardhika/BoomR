@@ -151,6 +151,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         super.touchesBegan(touches, with: event)
        
         next?.touchesBegan(touches, with: event)
+        let sound = SKAction.playSoundFileNamed("click.mp3", waitForCompletion: false)
+        playSound(sound: sound)
         
         let touch:UITouch = touches.first! as UITouch
         let positionInScene = touch.location(in: self)

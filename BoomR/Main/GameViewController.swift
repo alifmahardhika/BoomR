@@ -15,6 +15,8 @@ class GameViewController: UIViewController{
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var levelButton: UIButton!
     var player: AVAudioPlayer?
+    var clickSoundPlayer: AVAudioPlayer?
+//    let clickSound = URL(fileURLWithPath: Bundle.main.path(forResource: "click", ofType: "mp3")!)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,7 +88,32 @@ class GameViewController: UIViewController{
 
     }
     
+    func makeClickSound() {
+        let fileUrl = Bundle.main.path(forResource: "click", ofType: "mp3")
+        do {
+            try AVAudioSession.sharedInstance().setMode(.default)
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+            
+            guard let fileUrl = fileUrl else{
+                return
+            }
+            clickSoundPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: fileUrl))
+            
+            guard let clickSoundPlayer = clickSoundPlayer else{
+                return
+            }
+            clickSoundPlayer.play()
+            
+        } catch {
+            print("failed click sound")
+        }
+    }
+    @IBAction func touchSelectLevel(_ sender: Any) {
+        makeClickSound()
+    }
+    
     @IBAction func touchedPlay(_ sender: Any) {
+        makeClickSound()
         let gsStrbd: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = gsStrbd.instantiateViewController(identifier: "game") as! SceneViewController
 //      present new storyboard

@@ -8,6 +8,7 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class SelectLevelViewController: UIViewController{
     var selectedLevel = 1
@@ -15,6 +16,8 @@ class SelectLevelViewController: UIViewController{
     @IBOutlet weak var lv1: UIButton!
     @IBOutlet weak var lv2: UIButton!
     @IBOutlet weak var lv3: UIButton!
+    
+    var clickSoundPlayer: AVAudioPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +39,29 @@ class SelectLevelViewController: UIViewController{
 //        }
     }
     
+    func makeClickSound() {
+        let fileUrl = Bundle.main.path(forResource: "click", ofType: "mp3")
+        do {
+            try AVAudioSession.sharedInstance().setMode(.default)
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+            
+            guard let fileUrl = fileUrl else{
+                return
+            }
+            clickSoundPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: fileUrl))
+            
+            guard let clickSoundPlayer = clickSoundPlayer else{
+                return
+            }
+            clickSoundPlayer.play()
+            
+        } catch {
+            print("failed click sound")
+        }
+    }
+    
     @IBAction func goToLevel(_ sender: UIButton) {
-        print(sender.titleLabel!.text!)
+        makeClickSound()
         let gsStrbd: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = gsStrbd.instantiateViewController(identifier: "game") as! SceneViewController
 //      present new storyboard
@@ -55,5 +79,8 @@ class SelectLevelViewController: UIViewController{
 //        let lvl:Int? = Int(sender.titleLabel!.text!.last)
         
         present(vc, animated: true)
+    }
+    @IBAction func touchBack(_ sender: Any) {
+        makeClickSound()
     }
 }
